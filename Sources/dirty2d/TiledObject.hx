@@ -22,7 +22,9 @@
 
 package dirty2d;
 
-import kha.math.Vector2;
+import kha.math.Vector2; 
+import kha.Rectangle;
+
 
 class TiledObject {
 
@@ -136,6 +138,12 @@ class TiledObject {
 
 	private function get_hasPolyline():Bool {
 		return this.polyline != null;
+	}
+	
+	public function collides(rect: Rectangle) : Bool {
+		
+		
+		return false;
 	}
 
 }

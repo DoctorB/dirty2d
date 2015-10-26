@@ -75,11 +75,8 @@ class Layer {
 		var name:String = xml.get("name");
 		var width:Int = Std.parseInt(xml.get("width"));
 		var height:Int = Std.parseInt(xml.get("height"));
-		var opacity:Float = Std.parseFloat(xml.get("opacity") != null ?
-			xml.get("opacity") : "1.0");
-		var visible:Bool = xml.get("visible") == null ?
-			true : Std.parseInt(xml.get("visible")) == 1 ?
-				true : false;
+		var opacity:Float = Std.parseFloat(xml.get("opacity") != null ? xml.get("opacity") : "1.0");
+		var visible:Bool = xml.get("visible") == null ? true : Std.parseInt(xml.get("visible")) == 1 ? true : false;
 
 		var tileGIDs:Array<Int> = new Array<Int>();
 

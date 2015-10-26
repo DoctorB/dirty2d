@@ -29,6 +29,7 @@ import kha.math.Vector2;
 import kha.math.Vector2i;
 import kha.Rectangle;
 
+
 @:expose
 class TiledMap {
 
@@ -246,11 +247,31 @@ class TiledMap {
 		}
 	}
 	
-	public function collides(sprite: Sprite): Bool {
+	public function collides(sprite: Sprite, withWhat: ColliderObject): Bool {
+		var rect = sprite.collisionRect();
+		if (withWhat == ColliderObject.ALL) {
+			
+		} else if (withWhat == ColliderObject.IMAGELAYER) {
+			
+		} else if (withWhat == ColliderObject.LAYER) {
+			
+		} else if (withWhat == ColliderObject.TILEDOBJECT) {
+			
+		}
+		
 		return false;
 	}
 	
-	public function collidesPoint(point: Vector2): Bool {
+	public function collidesPoint(point: Vector2, withWhat: ColliderObject): Bool {
+		if (withWhat == ColliderObject.ALL) {
+			
+		} else if (withWhat == ColliderObject.IMAGELAYER) {
+			
+		} else if (withWhat == ColliderObject.LAYER) {
+			
+		} else if (withWhat == ColliderObject.TILEDOBJECT) {
+			
+		}
 		return false;
 	}
 	

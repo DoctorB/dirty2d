@@ -24,6 +24,7 @@ package dirty2d;
 
 import kha.graphics2.Graphics;
 import haxe.io.Path;
+import kha.Rectangle;
 
 class ImageLayer {
 
@@ -90,6 +91,11 @@ class ImageLayer {
 		if (this.image == null || !this.visible) return;
 		// TODO: check boundary conditions
 		g.drawImage(this.image, 0, 0);
+	}
+	
+	public function collides(rect: Rectangle) : Bool {
+		if (this.image == null || !this.visible) return false;
+		return false;
 	}
 	
 }
