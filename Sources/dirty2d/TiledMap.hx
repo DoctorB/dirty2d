@@ -95,7 +95,6 @@ class TiledMap {
 
 	private function parseXML(xml:String) {
 		
-		trace(xml);
 		var xml = Xml.parse(xml).firstElement();
 
 		this.widthInTiles = Std.parseInt(xml.get("width"));
