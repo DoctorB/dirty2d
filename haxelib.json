@@ -1,12 +1,12 @@
 {
 	"name": "dirty2d",
-	"url" : "",
+	"url" : "https://github.com/DoctorB/dirty2d.git",
 	"license": "MIT",
 	"tags": ["cross", "game"],
-	"description": "2D game engine for Kha",
+	"description": "Experimental 2D game engine for Kha",
 	"version": "15.8.0",
 	"releasenote": "",
-	"contributors": ["DottorB"],
+	"contributors": ["DoctorB"],
 	"dependencies": {
 		"kha": ""
 	}
