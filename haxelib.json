@@ -1,0 +1,13 @@
+{
+	"name": "dirty2d",
+	"url" : "",
+	"license": "MIT",
+	"tags": ["cross", "game"],
+	"description": "2D game engine for Kha",
+	"version": "15.8.0",
+	"releasenote": "",
+	"contributors": ["DottorB"],
+	"dependencies": {
+		"kha": ""
+	}
+}
