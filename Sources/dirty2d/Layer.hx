@@ -197,6 +197,15 @@ class Layer {
 							//TODO
 					}
 
+					trace("----");
+					trace("x: " + x);
+					trace("y: " + y);
+					trace("destx: " + destx);
+					trace("desty: " + desty);
+					trace("this.parent.tileWidth: " + this.parent.tileWidth);
+					trace("this.parent.tileHeight: " + this.parent.tileHeight);
+					trace("----");
+					
 					var tileset : Tileset = this.parent.getTilesetByGID(nextGID);
 					var rect : Rectangle = tileset.getTileRectByGID(nextGID);
 					g.drawScaledSubImage(tileset.image.texture, rect.x, rect.y, rect.width, rect.height, destx, desty, this.parent.tileWidth, this.parent.tileHeight);
