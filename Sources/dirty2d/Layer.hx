@@ -187,7 +187,7 @@ class Layer {
 				if (nextGID != 0) {
 					var destx : Float;
 					var desty : Float;
-					switch (map.orientation) {
+					switch (this.parent.orientation) {
 						case TiledMapOrientation.Orthogonal:
 							destx = x * this.parent.tileWidth;
 							desty = y * this.parent.tileHeight;
