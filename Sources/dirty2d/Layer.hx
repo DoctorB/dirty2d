@@ -94,6 +94,7 @@ class Layer {
 						case "csv":
 							chunk = child.firstChild().nodeValue;
 							tileGIDs = csvToArray(chunk);
+							
 						default:
 							for (tile in child) {
 								if (Common.isValidElement(tile)) {
@@ -168,6 +169,12 @@ class Layer {
 				}
 			}
 		}
+		
+		for (x in 0...result.length - 1) {
+			trace("pos: " + x + "val: " + result[x]);
+		}
+		
+		
 		return result;
 	}
 	
@@ -188,10 +195,10 @@ class Layer {
 			for (x in 0...this.parent.widthInTiles) {
 				var nextGID = this.tiles[gidCounter].gid;
 				
-					trace("----");
-					trace("x: " + x + " y: " + y);
-					trace("nextGID: " + nextGID);
-					trace("----");
+				trace("----");
+				trace("x: " + x + " y: " + y);
+				trace("nextGID: " + nextGID);
+				trace("----");
 
 				
 				if (nextGID != 0) {
