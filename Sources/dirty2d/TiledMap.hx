@@ -96,7 +96,8 @@ class TiledMap {
 	private function parseXML(xml:String) {
 		
 		var xml = Xml.parse(xml).firstElement();
-
+		trace("1");
+		
 		this.widthInTiles = Std.parseInt(xml.get("width"));
 		this.heightInTiles = Std.parseInt(xml.get("height"));
 		this.orientation = xml.get("orientation") == "orthogonal" ? TiledMapOrientation.Orthogonal : TiledMapOrientation.Isometric;
@@ -124,6 +125,7 @@ class TiledMap {
 		} else {
 			this.backgroundColor = 0x00000000;
 		}
+		trace("2");
 
 		for (child in xml) {
 			if(Common.isValidElement(child)) {
@@ -162,6 +164,7 @@ class TiledMap {
 				}
 			}
 		}
+		trace("3");
 	}
 
 	/**
