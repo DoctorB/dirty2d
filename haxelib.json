@@ -4,7 +4,7 @@
 	"license": "MIT",
 	"tags": ["cross", "game"],
 	"description": "Experimental 2D game engine for Kha",
-	"version": "15.8.0",
+	"version": "1.0.0",
 	"releasenote": "",
 	"contributors": ["DoctorB"],
 	"dependencies": {
