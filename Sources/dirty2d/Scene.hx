@@ -263,12 +263,12 @@ class Scene {
 	}
 	
 	public function getWidth() : Float {
-		if (collisionLayer != null) return collisionLayer.getMap().getWidth() * collisionLayer.getMap().getTileset().TILE_WIDTH;
+		if (collisionLayer != null) return collisionLayer.getMap().totalWidth;
 		else return 0;
 	}
 	
 	public function getHeight() : Float {
-		if (collisionLayer != null) return collisionLayer.getMap().getHeight() * collisionLayer.getMap().getTileset().TILE_HEIGHT;
+		if (collisionLayer != null) return collisionLayer.getMap().totalHeight;
 		else return 0;
 	}
 	
