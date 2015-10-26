@@ -184,9 +184,16 @@ class Layer {
 		
 		trace("layer_render xstart: " + xstart + " xend:" + xend + " ystart:" + ystart + " yend:" + yend);
 		
-		for (y in 0...15) {
-			for (x in 0...100) {
+		for (y in 0...this.parent.heightInTiles) {
+			for (x in 0...this.parent.widthInTiles) {
 				var nextGID = this.tiles[gidCounter].gid;
+				
+					trace("----");
+					trace("x: " + x + " y: " + y);
+					trace("nextGID: " + nextGID);
+					trace("----");
+
+				
 				if (nextGID != 0) {
 					var destx : Float = x * this.parent.tileWidth;
 					var desty : Float = y * this.parent.tileHeight;
@@ -200,14 +207,6 @@ class Layer {
 							//TODO
 					}
 					*/
-					trace("----");
-					trace("x: " + x);
-					trace("y: " + y);
-					trace("destx: " + destx);
-					trace("desty: " + desty);
-					trace("this.parent.tileWidth: " + this.parent.tileWidth);
-					trace("this.parent.tileHeight: " + this.parent.tileHeight);
-					trace("----");
 					
 					var tileset : Tileset = this.parent.getTilesetByGID(nextGID);
 					var rect : Rectangle = tileset.getTileRectByGID(nextGID);
