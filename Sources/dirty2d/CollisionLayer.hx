@@ -236,12 +236,7 @@ class CollisionLayer {
 	}
 	
 	private function moveSprite(sprite: Sprite): Void {
-		/*if (sprite.collides && sprite.speedy >= 0 && map.collides(sprite) && !Std.is(sprite, Gas)) {
-			sprite.y = Math.ffloor(sprite.y);
-			while (map.collides(sprite) && sprite.y > - sprite.height) {
-				sprite.y -= 1;
-			}
-		}*/
+		/*
 		sprite.speedx += sprite.accx;
 		sprite.speedy += sprite.accy;
 		if (sprite.speedy > sprite.maxspeedy) sprite.speedy = sprite.maxspeedy;
@@ -255,45 +250,15 @@ class CollisionLayer {
 			if (map.collides(sprite)) {
 				line(xstart, ystart, xaim, yaim, sprite);
 			}
-
-			/*sprite.x += sprite.speedx;
-			
-			if (colissionMap != null) {
-				if (sprite.speedx > 0) { if (colissionMap.collideright(sprite)) sprite.hitFrom(Direction.LEFT); }
-				else if (sprite.speedx < 0) { if (colissionMap.collideleft(sprite)) sprite.hitFrom(Direction.RIGHT); }
-				sprite.y += sprite.speedy;
-				if (sprite.speedy > 0) { if (colissionMap.collidedown(sprite)) sprite.hitFrom(Direction.UP); }
-				else if (sprite.speedy < 0) { if (colissionMap.collideup(sprite)) sprite.hitFrom(Direction.DOWN); }
-			}*/
-			
-			//Bubble Dragons Hack
-			/*if (colissionMap != null) {
-				var rect : Rectangle = sprite.collisionRect();
-				if (sprite.speedx > 0) { if (rect.x + rect.width > 640 - 16) { sprite.x = 640 - 16 - rect.width; sprite.hitFrom(Direction.LEFT); } }
-				else if (sprite.speedx < 0) { if (rect.x < 16) { sprite.x = 16; sprite.hitFrom(Direction.RIGHT); } }
-				sprite.y += sprite.speedy;
-				if (sprite.speedy > 0) { if (colissionMap.collidedown(sprite)) { sprite.hitFrom(Direction.UP); sprite.speedy = 0; } }
-				else if (sprite.speedy < 0 && sprite.y < 50) { if (colissionMap.collideup(sprite)) sprite.hitFrom(Direction.DOWN); }
-			}*/
 		}
 		else {
 			sprite.x += sprite.speedx;
 			sprite.y += sprite.speedy;
 		}
+		*/
 	}
 	
 	private function moveSprites(sprites: Array<Sprite>, xleft: Float, xright: Float): Void {
-		/*var i: Int = 0;
-		while (i < sprites.length) {
-			if (sprites[i].x + sprites[i].width > xleft) break;
-			++i;
-		}
-		while (i < sprites.length) {
-			var sprite: Sprite = sprites[i];
-			if (sprite.x > xright) break;
-			moveSprite(sprite);
-			++i;
-		}*/
 		for (sprite in sprites) moveSprite(sprite);
 	}
 	
@@ -308,14 +273,6 @@ class CollisionLayer {
 		sortAllSprites();
 		moveAllSprites(xleft, xright);
 		
-		/*var i: Int = 0;
-		while (i < enemies.length) {
-			if (enemies[i].x + enemies[i].width > xleft) break;
-			++i;
-		}
-		while (i < enemies.length) {
-			var enemy = enemies[i];
-			if (enemy.x > xright) break;*/
 		for (enemy in enemies) {
 			var rect: Rectangle = enemy.collisionRect();
 			for (hero in heroes) {
