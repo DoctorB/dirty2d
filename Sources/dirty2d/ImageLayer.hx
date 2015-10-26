@@ -90,7 +90,7 @@ class ImageLayer {
 	public function render(g: Graphics, xleft: Int, ytop: Int, width: Int, height: Int): Void {
 		if (this.image == null || !this.visible) return;
 		// TODO: check boundary conditions
-		g.drawImage(this.image, 0, 0);
+		g.drawImage(this.image.texture, 0, 0);
 	}
 	
 	public function collides(rect: Rectangle) : Bool {
