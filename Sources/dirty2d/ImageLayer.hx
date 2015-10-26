@@ -31,17 +31,22 @@ class ImageLayer {
 	public var name(default, null):String;
 	public var opacity(default, null):Float;
 	public var visible(default, null):Bool;
+	
+	public var x(default, null): Int;
+	public var y(default, null): Int;
 
 	public var properties(default, null):Map<String, String>;
 	public var image(default, null):TilesetImage;
 
-	private function new(tiledMap:TiledMap, name:String, opacity:Float, visible:Bool, properties:Map<String, String>, image:TilesetImage) {
+	private function new(tiledMap:TiledMap, name:String, opacity:Float, visible:Bool, properties:Map<String, String>, image:TilesetImage, x: Int, y: Int) {
 		this.tiledMap = tiledMap;
 		this.name = name;
 		this.opacity = opacity;
 		this.visible = visible;
 		this.properties = properties;
 		this.image = image;
+		this.x = x;
+		this.y = y;
 	}
 
 	public static function fromGenericXml(tiledMap:TiledMap, xml:Xml):ImageLayer {
@@ -49,6 +54,16 @@ class ImageLayer {
 		var opacity:Float = xml.exists("opacity") ? Std.parseFloat(xml.get("opacity")) : 1.0;
 		var visible:Bool = xml.exists("visible") ? Std.parseInt("visible") == 1 : false;
 
+		/*
+		 <imagelayer name="image_1" x="10" y="10">
+			<image source="purple.png"/>
+		 </imagelayer>
+		*/
+		
+		// Added
+		var x: Int = xml.exists("x") ? Std.parseInt("x") : 0;
+		var y: Int = xml.exists("y") ? Std.parseInt("y") : 0;
+		
 		var properties = new Map<String, String>();
 		var image:TilesetImage = null;
 
@@ -68,11 +83,12 @@ class ImageLayer {
 			}
 		}
 
-		return new ImageLayer(tiledMap, name, opacity, visible, properties, image);
+		return new ImageLayer(tiledMap, name, opacity, visible, properties, image, x, y);
 	}
 	
-	public function render(g: Graphics): Void {
-		if (this.image == null) return;
+	public function render(g: Graphics, xleft: Int, ytop: Int, width: Int, height: Int): Void {
+		if (this.image == null || !this.visible) return;
+		// TODO: check boundary conditions
 		g.drawImage(this.image, 0, 0);
 	}
 	

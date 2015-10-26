@@ -174,11 +174,18 @@ class Layer {
 		return result;
 	}
 	
-	public function render(g: Graphics): Void {
+	public function render(g: Graphics, xleft: Int, ytop: Int, _width: Int, _height: Int): Void {
 		if (!this.visible || parent == null) return;
 		var gidCounter:Int = 0;
-		for (y in 0...this.parent.heightInTiles) {
-			for (x in 0...this.parent.widthInTiles) {
+		
+		var xstart: Int = Std.int(Math.max(xleft / this.parent.tileWidth - 1, 0));
+		var xend: Int = Std.int(Math.min((xleft + _width) / this.parent.tileWidth + 1, this.parent.totalWidth));
+		
+		var ystart: Int = Std.int(Math.max(ytop / this.parent.tileHeight - 1, 0));
+		var yend: Int = Std.int(Math.min((ytop + _height) / this.parent.tileHeight + 2, this.parent.totalHeight));
+		
+		for (y in ystart...yend) {
+			for (x in xstart...xend) {
 				var nextGID = this.tiles[gidCounter].gid;
 				if (nextGID != 0) {
 					var destx : Float;
@@ -187,25 +194,12 @@ class Layer {
 						case TiledMapOrientation.Orthogonal:
 							destx = x * this.parent.tileWidth;
 							desty = y * this.parent.tileHeight;
-						case TiledMapOrientation.Isometric:
-							destx = (this.parent.totalWidth + x - y - 1) * this.parent.tileWidth * 0.5; //TODO: test
-							desty = (y + x) * this.parent.tileHeight * 0.5;
 					}
 
 					var tileset : Tileset = this.parent.getTilesetByGID(nextGID);
 					var rect : Rectangle = tileset.getTileRectByGID(nextGID);
-
-					if(this.parent.orientation == TiledMapOrientation.Isometric) { //Why?
-						destx += this.parent.totalWidth/2;
-					}
-					
 					g.drawScaledSubImage(tileset.image.texture, rect.x, rect.y, rect.width, rect.height, destx, desty, this.parent.tileWidth, this.parent.tileHeight);
-					
-					// draw
-					//painter.drawImage2(tileset.image.texture, rect.x, rect.y, rect.width, rect.height, destx, desty, map.tileWidth, map.tileHeight);
-					//bitmapData.copyPixels(tileset.image.texture, rect, point, null, null, true);
 				}
-				
 				gidCounter++;
 			}
 		}

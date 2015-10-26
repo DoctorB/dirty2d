@@ -182,7 +182,7 @@ class TiledMap {
 		return this.widthInTiles * this.tileWidth;
 	}
 
-		/**
+	/**
 	 * Returns the total Height of the map
 	 * @return Map height in pixels
 	 */
@@ -236,14 +236,22 @@ class TiledMap {
 		return null;
 	}
 
-	public function render(g: Graphics): Void {
+	public function render(g: Graphics, xleft: Int, ytop: Int, width: Int, height: Int): Void {
 		g.color = Color.White;
 		for (layer in this.layers) {
-			layer.render(g);
-		}
+			layer.render(g, xleft, ytop, width, height);
+		}		
 		for (imageLayer in this.imageLayers) {
 			imageLayer.render(g);
 		}
+	}
+	
+	public function collides(sprite: Sprite): Bool {
+		return false;
+	}
+	
+	public function collidesPoint(point: Vector2): Bool {
+		return false;
 	}
 	
 	/*

@@ -8,13 +8,13 @@ import kha.math.Vector2;
 import kha.Rectangle;
 
 class CollisionLayer {
-	private var map: Tiledmap;
+	private var map: TiledMap;
 	private var heroes     : Array<Sprite>;
 	private var enemies    : Array<Sprite>;
 	private var projectiles: Array<Sprite>;
 	private var others     : Array<Sprite>;
 	
-	public function new(map: Tiledmap) {
+	public function new(map: TiledMap) {
 		this.map = map;
 		heroes      = new Array<Sprite>();
 		enemies     = new Array<Sprite>();
@@ -22,7 +22,7 @@ class CollisionLayer {
 		others      = new Array<Sprite>();
 	}
 	
-	public function getMap(): Tiledmap {
+	public function getMap(): TiledMap {
 		return map;
 	}
 	

@@ -16,12 +16,10 @@ class Scene {
 	private static var instance : Scene;
 	
 	var collisionLayer: CollisionLayer;
-	var backgrounds : Array<Tiledmap>;
-	var foregrounds : Array<Tiledmap>;
+	var backgrounds : Array<TiledMap>;
+	var foregrounds : Array<TiledMap>;
 	var backgroundSpeeds : Array<Float>;
 	var foregroundSpeeds : Array<Float>;
-	//var lastUpdatedSprites : Array<Sprite>;
-	//var updatedSprites : Array<Sprite>;
 	
 	var sprites : Array<Sprite>;
 	
@@ -43,12 +41,10 @@ class Scene {
 	
 	function new() {
 		sprites = new Array<Sprite>();
-		backgrounds = new Array<Tiledmap>();
-		foregrounds = new Array<Tiledmap>();
+		backgrounds = new Array<TiledMap>();
+		foregrounds = new Array<TiledMap>();
 		backgroundSpeeds = new Array<Float>();
 		foregroundSpeeds = new Array<Float>();
-		//lastUpdatedSprites = new Array<Sprite>();
-		//updatedSprites = new Array<Sprite>();
 		backgroundColor = Color.fromBytes(0, 0, 0);
 		camx = 0;
 		camy = 0;
@@ -61,8 +57,8 @@ class Scene {
 	}
 	
 	public function clearTilemaps() {
-		backgrounds = new Array<Tiledmap>();
-		foregrounds = new Array<Tiledmap>();
+		backgrounds = new Array<TiledMap>();
+		foregrounds = new Array<TiledMap>();
 		backgroundSpeeds = new Array<Float>();
 		foregroundSpeeds = new Array<Float>();
 	}
@@ -71,17 +67,17 @@ class Scene {
 		backgroundColor = color;
 	}
 
-	public function addBackgroundTilemap(tilemap : Tiledmap, speed : Float) {
+	public function addBackgroundTilemap(tilemap : TiledMap, speed : Float) {
 		backgrounds.push(tilemap);
 		backgroundSpeeds.push(speed);
 	}
 	
-	public function addForegroundTilemap(tilemap : Tiledmap, speed : Float) {
+	public function addForegroundTilemap(tilemap : TiledMap, speed : Float) {
 		foregrounds.push(tilemap);
 		foregroundSpeeds.push(speed);
 	}
 	
-	public function setColissionMap(tilemap: Tiledmap) {
+	public function setColissionMap(tilemap: TiledMap) {
 		collisionLayer = new CollisionLayer(tilemap);
 	}
 	
@@ -112,22 +108,16 @@ class Scene {
 	public function removeHero(sprite: Sprite) {
 		sprite.removed = true;
 		dirtySprites = true;
-		//if (collisionLayer != null) collisionLayer.removeHero(sprite);
-		//sprites.remove(sprite);
 	}
 	
 	public function removeEnemy(sprite: Sprite) {
 		sprite.removed = true;
 		dirtySprites = true;
-		//if (collisionLayer != null) collisionLayer.removeEnemy(sprite);
-		//sprites.remove(sprite);
 	}
 	
 	public function removeProjectile(sprite: Sprite) {
 		sprite.removed = true;
 		dirtySprites = true;
-		//if (collisionLayer != null) collisionLayer.removeProjectile(sprite);
-		//sprites.remove(sprite);
 	}
 	
 	public function removeOther(sprite: Sprite) {
@@ -235,19 +225,6 @@ class Scene {
 			collisionLayer.advance(screenOffsetX, screenOffsetX + Game.the.width);
 		}
 		cleanSprites();
-		/*var xleft = screenOffsetX;
-		var xright = screenOffsetX + Game.the.width;
-		var i: Int = 0;
-		while (i < sprites.length) {
-			if (sprites[i].x + sprites[i].width > xleft) break;
-			++i;
-		}
-		while (i < sprites.length) {
-			var sprite: Sprite = sprites[i];
-			if (sprite.x > xright) break;
-			sprite.update();
-			++i;
-		}*/
 		for (sprite in sprites) sprite.update();
 		cleanSprites();
 	}
@@ -259,12 +236,10 @@ class Scene {
 		
 		for (i in 0...backgrounds.length) {
 			g.transformation = FastMatrix3.translation(Math.round(-screenOffsetX * backgroundSpeeds[i]), Math.round(-screenOffsetY * backgroundSpeeds[i]));
-			//painter.translate(Math.round(-screenOffsetX * backgroundSpeeds[i]), Math.round(-screenOffsetY * backgroundSpeeds[i]));
 			backgrounds[i].render(g, Std.int(screenOffsetX * backgroundSpeeds[i]), Std.int(screenOffsetY * backgroundSpeeds[i]), Game.the.width, Game.the.height);
 		}
 		
 		g.transformation = FastMatrix3.translation(-screenOffsetX, -screenOffsetY);
-		//painter.translate(-screenOffsetX, -screenOffsetY);
 		
 		sort(sprites);
 		
@@ -283,7 +258,6 @@ class Scene {
 		
 		for (i in 0...foregrounds.length) {
 			g.transformation = FastMatrix3.translation(Math.round(-screenOffsetX * foregroundSpeeds[i]), Math.round(-screenOffsetY * foregroundSpeeds[i]));
-			//painter.translate(Math.round(-screenOffsetX * foregroundSpeeds[i]), Math.round(-screenOffsetY * foregroundSpeeds[i]));
 			foregrounds[i].render(g, Std.int(screenOffsetX * foregroundSpeeds[i]), Std.int(screenOffsetY * foregroundSpeeds[i]), Game.the.width, Game.the.height);
 		}
 	}
