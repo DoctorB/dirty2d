@@ -149,6 +149,8 @@ class Layer {
 
 	private static function csvToArray(input:String):Array<Int> {
 		var result:Array<Int> = new Array<Int>();
+		
+		// TODO: TiledEditor add \n\r
 		var rows:Array<String> = StringTools.trim(input).split("\n\r");
 		var row:String;
 
@@ -164,18 +166,10 @@ class Layer {
 
 			for (entry in entries) {				
 				if(entry != "" && entry != null && entry != "\n\r") {
-					trace("entry: " + entry);
 					result.push(Std.parseInt(entry));
 				}
 			}
 		}
-		
-		/*
-		for (x in 0...result.length - 1) {
-			trace("pos: " + x + "val: " + result[x]);
-		}
-		*/
-		
 		return result;
 	}
 	
@@ -183,39 +177,25 @@ class Layer {
 		if (!this.visible || parent == null) return;
 		var gidCounter:Int = 0;
 		
-		
 		var xstart: Int = Std.int(Math.max(xleft / this.parent.tileWidth - 1, 0));
-		var xend: Int = Std.int(Math.min((xleft + _width) / this.parent.tileWidth, this.parent.totalWidth));
-		
+		var xend: Int = Std.int(Math.min((xleft + _width) / this.parent.tileWidth + 1, this.parent.totalWidth));
 		var ystart: Int = Std.int(Math.max(ytop / this.parent.tileHeight - 1, 0));
-		var yend: Int = Std.int(Math.min((ytop + _height) / this.parent.tileHeight, this.parent.totalHeight));
+		var yend: Int = Std.int(Math.min((ytop + _height) / this.parent.tileHeight + 2, this.parent.totalHeight));
+	
+		if (xend > this.parent.widthInTiles) {
+			xend = this.parent.widthInTiles;
+		}
 		
-		trace("layer_render xstart: " + xstart + " xend:" + xend + " ystart:" + ystart + " yend:" + yend);
+		if (yend > this.parent.heightInTiles) {
+			yend = this.parent.heightInTiles;
+		}
 		
-		for (y in 0...this.parent.heightInTiles) {
-			for (x in 0...this.parent.widthInTiles) {
+		for (y in ystart...yend) {
+			for (x in xstart...xend) {
 				var nextGID = this.tiles[gidCounter].gid;
-				
-				trace("----");
-				trace("x: " + x + " y: " + y);
-				trace("nextGID: " + nextGID);
-				trace("----");
-
-				
 				if (nextGID != 0) {
 					var destx : Float = x * this.parent.tileWidth;
 					var desty : Float = y * this.parent.tileHeight;
-					
-					/*
-					switch (this.parent.orientation) {
-						case TiledMapOrientation.Orthogonal:
-							destx = x * this.parent.tileWidth;
-							desty = y * this.parent.tileHeight;
-						case TiledMapOrientation.Isometric:
-							//TODO
-					}
-					*/
-					
 					var tileset : Tileset = this.parent.getTilesetByGID(nextGID);
 					var rect : Rectangle = tileset.getTileRectByGID(nextGID);
 					g.drawScaledSubImage(tileset.image.texture, rect.x, rect.y, rect.width, rect.height, destx, desty, this.parent.tileWidth, this.parent.tileHeight);
