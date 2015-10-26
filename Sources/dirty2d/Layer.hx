@@ -188,8 +188,10 @@ class Layer {
 			for (x in 0...this.parent.widthInTiles) {
 				var nextGID = this.tiles[gidCounter].gid;
 				if (nextGID != 0) {
-					var destx : Float = 0;
-					var desty : Float = 0;
+					var destx : Float = x * this.parent.tileWidth;
+					var desty : Float = y * this.parent.tileHeight;
+					
+					/*
 					switch (this.parent.orientation) {
 						case TiledMapOrientation.Orthogonal:
 							destx = x * this.parent.tileWidth;
@@ -197,7 +199,7 @@ class Layer {
 						case TiledMapOrientation.Isometric:
 							//TODO
 					}
-
+					*/
 					trace("----");
 					trace("x: " + x);
 					trace("y: " + y);
