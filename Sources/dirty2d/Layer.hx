@@ -191,6 +191,8 @@ class Layer {
 						case TiledMapOrientation.Orthogonal:
 							destx = x * this.parent.tileWidth;
 							desty = y * this.parent.tileHeight;
+						case TiledMapOrientation.Isometric:
+							//TODO
 					}
 
 					var tileset : Tileset = this.parent.getTilesetByGID(nextGID);
