@@ -124,6 +124,8 @@ class TiledMap {
 
 		for (child in xml) {
 			if(Common.isValidElement(child)) {
+				trace("xml child.nodename: " + child.nodeName);
+				
 				if (child.nodeName == "tileset") {
 					var tileset:Tileset = null;
 
@@ -241,6 +243,7 @@ class TiledMap {
 		g.color = Color.White;
 		
 		trace("tiledMap_render xleft: " +  xleft +  " ytop: " + ytop + " width:" + width + " height:" + height);
+		trace("this.layers: " + this.layers.length);
 		
 		for (layer in this.layers) {
 			layer.render(g, xleft, ytop, width, height);
