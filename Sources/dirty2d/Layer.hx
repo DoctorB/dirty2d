@@ -184,8 +184,8 @@ class Layer {
 		
 		trace("layer_render xstart: " + xstart + " xend:" + xend + " ystart:" + ystart + " yend:" + yend);
 		
-		for (y in 0...14) {
-			for (x in 0...99) {
+		for (y in 0...15) {
+			for (x in 0...100) {
 				var nextGID = this.tiles[gidCounter].gid;
 				if (nextGID != 0) {
 					var destx : Float = x * this.parent.tileWidth;
