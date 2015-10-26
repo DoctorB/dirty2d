@@ -175,6 +175,7 @@ class Layer {
 		if (!this.visible || parent == null) return;
 		var gidCounter:Int = 0;
 		
+		
 		var xstart: Int = Std.int(Math.max(xleft / this.parent.tileWidth - 1, 0));
 		var xend: Int = Std.int(Math.min((xleft + _width) / this.parent.tileWidth, this.parent.totalWidth));
 		
@@ -183,8 +184,8 @@ class Layer {
 		
 		trace("layer_render xstart: " + xstart + " xend:" + xend + " ystart:" + ystart + " yend:" + yend);
 		
-		for (y in ystart...yend) {
-			for (x in xstart...xend) {
+		for (y in 0...this.parent.heightInTiles) {
+			for (x in 0...this.parent.widthInTiles) {
 				var nextGID = this.tiles[gidCounter].gid;
 				if (nextGID != 0) {
 					var destx : Float = 0;
@@ -213,6 +214,7 @@ class Layer {
 				gidCounter++;
 			}
 		}
+		
 	}
 
 	public function collides(rect: Rectangle) : Bool {
