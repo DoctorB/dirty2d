@@ -107,11 +107,15 @@ class CollisionLayer {
 	}
 	
 	public function collidesPoint(point: Vector2): Bool {
-		return map.collidesPoint(point);
+		// TODO
+		return false;
+		//return map.collidesPoint(point);
 	}
 
 	public function collidesSprite(sprite: Sprite): Bool {
-		return map.collides(sprite);
+		// TODO
+		return false;
+		//return map.collides(sprite);
 	}
 	
 	//Bresenhahm
