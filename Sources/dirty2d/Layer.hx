@@ -185,8 +185,8 @@ class Layer {
 			for (x in xstart...xend) {
 				var nextGID = this.tiles[gidCounter].gid;
 				if (nextGID != 0) {
-					var destx : Float;
-					var desty : Float;
+					var destx : Float = 0;
+					var desty : Float = 0;
 					switch (this.parent.orientation) {
 						case TiledMapOrientation.Orthogonal:
 							destx = x * this.parent.tileWidth;
