@@ -77,7 +77,7 @@ class TiledMap {
 
 	public var backgroundColorSet(default, null):Bool = false;
 
-	private function new(path:String, renderer:Renderer) {
+	private function new(path:String) {
 		this.path = path;
 		var xml = Loader.the.getBlob(path).toString();
 		parseXML(xml);
@@ -128,7 +128,7 @@ class TiledMap {
 					var tileset:Tileset = null;
 
 					if (child.get("source") != null) {
-						tileset = Tileset.fromGenericXml(this, Helper.getText(child.get("source")));
+						tileset = Tileset.fromGenericXml(this, Common.getText(child.get("source")));
 					} else {
 						tileset = Tileset.fromGenericXml(this, child.toString());
 					}

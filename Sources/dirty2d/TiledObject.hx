@@ -100,7 +100,7 @@ class TiledObject {
 			if(Common.isValidElement(child)) {
 				if (child.nodeName == "properties") {
 					for (property in child) {
-						if(Helper.isValidElement(property)) {
+						if(Common.isValidElement(property)) {
 							properties.set(property.get("name"), property.get("value"));
 						}
 					}

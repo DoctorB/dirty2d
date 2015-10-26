@@ -202,4 +202,10 @@ class Layer {
 		}
 	}
 
+	public function collides(rect: Rectangle) : Bool {
+		
+		
+		return false;
+	}
+
 }

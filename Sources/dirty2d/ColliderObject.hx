@@ -1,4 +1,4 @@
-package Sources.dirty2d;
+package dirty2d;
 
 
 @:expose

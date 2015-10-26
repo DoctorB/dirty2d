@@ -95,6 +95,7 @@ class ImageLayer {
 	
 	public function collides(rect: Rectangle) : Bool {
 		if (this.image == null || !this.visible) return false;
+		
 		return false;
 	}
 	
