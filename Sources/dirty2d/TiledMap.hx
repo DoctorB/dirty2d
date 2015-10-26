@@ -94,6 +94,8 @@ class TiledMap {
 	}
 
 	private function parseXML(xml:String) {
+		
+		trace(xml);
 		var xml = Xml.parse(xml).firstElement();
 
 		this.widthInTiles = Std.parseInt(xml.get("width"));
@@ -107,6 +109,8 @@ class TiledMap {
 		this.imageLayers = new Array<ImageLayer>();
 		this.properties = new Map<String, String>();
 
+		
+		
 		// get background color
 		var backgroundColor:String = xml.get("backgroundcolor");
 
