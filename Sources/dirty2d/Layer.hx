@@ -162,18 +162,19 @@ class Layer {
 			var entries:Array<String> = row.split(",");
 			var entry:String;
 
-			for (entry in entries) {
-
-				if(entry != "") {
+			for (entry in entries) {				
+				if(entry != "" && entry != null) {
+					trace("entry: " + entry);
 					result.push(Std.parseInt(entry));
 				}
 			}
 		}
 		
+		/*
 		for (x in 0...result.length - 1) {
 			trace("pos: " + x + "val: " + result[x]);
 		}
-		
+		*/
 		
 		return result;
 	}
