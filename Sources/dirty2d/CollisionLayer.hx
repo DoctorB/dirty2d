@@ -120,6 +120,7 @@ class CollisionLayer {
 	
 	//Bresenhahm
 	private function line(xstart: Float, ystart: Float, xend: Float, yend: Float, sprite: Sprite): Void {
+		/*
 		var x0 = Math.round(xstart);
 		var y0 = Math.round(ystart);
 		var x1 = Math.round(xend);
@@ -231,6 +232,7 @@ class CollisionLayer {
 				}
 			}
 		}
+		*/
 	}
 	
 	private function moveSprite(sprite: Sprite): Void {
