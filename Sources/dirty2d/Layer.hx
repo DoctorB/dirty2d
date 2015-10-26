@@ -149,7 +149,7 @@ class Layer {
 
 	private static function csvToArray(input:String):Array<Int> {
 		var result:Array<Int> = new Array<Int>();
-		var rows:Array<String> = StringTools.trim(input).split("\n");
+		var rows:Array<String> = StringTools.trim(input).split("\n\r");
 		var row:String;
 
 		for (row in rows) {
@@ -163,7 +163,7 @@ class Layer {
 			var entry:String;
 
 			for (entry in entries) {				
-				if(entry != "" && entry != null && entry != "\n") {
+				if(entry != "" && entry != null && entry != "\n\r") {
 					trace("entry: " + entry);
 					result.push(Std.parseInt(entry));
 				}
