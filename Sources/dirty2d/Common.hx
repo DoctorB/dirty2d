@@ -10,7 +10,7 @@ class Common
 	public static function isValidElement(element:Xml):Bool {
 		if (element == null) return false;
 		trace(element.nodeType);
-		return false;
+		return Std.string(element.nodeType) == "0";
 	}
 
 }
