@@ -239,6 +239,9 @@ class TiledMap {
 
 	public function render(g: Graphics, xleft: Int, ytop: Int, width: Int, height: Int): Void {
 		g.color = Color.White;
+		
+		trace("tiledMap_render xleft: " +  xleft +  " ytop: " + ytop + " width:" + width + " height:" + height);
+		
 		for (layer in this.layers) {
 			layer.render(g, xleft, ytop, width, height);
 		}		
