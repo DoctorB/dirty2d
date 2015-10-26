@@ -163,7 +163,7 @@ class Layer {
 			var entry:String;
 
 			for (entry in entries) {				
-				if(entry != "" && entry != null) {
+				if(entry != "" && entry != null && entry != "\n") {
 					trace("entry: " + entry);
 					result.push(Std.parseInt(entry));
 				}
