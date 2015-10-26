@@ -244,10 +244,13 @@ class TiledMap {
 		
 		for (layer in this.layers) {
 			layer.render(g, xleft, ytop, width, height);
-		}		
+		}
+		
+		/*
 		for (imageLayer in this.imageLayers) {
 			imageLayer.render(g, xleft, ytop, width, height);
 		}
+		*/
 	}
 	
 	public function collides(sprite: Sprite, withWhat: ColliderObject): Bool {

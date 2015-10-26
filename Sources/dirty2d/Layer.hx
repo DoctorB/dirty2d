@@ -181,6 +181,8 @@ class Layer {
 		var ystart: Int = Std.int(Math.max(ytop / this.parent.tileHeight - 1, 0));
 		var yend: Int = Std.int(Math.min((ytop + _height) / this.parent.tileHeight + 2, this.parent.totalHeight));
 		
+		trace("layer_render xstart: " + xstart + " xend:" + xend + " ystart:" + ystart + " yend:" + yend);
+		
 		for (y in ystart...yend) {
 			for (x in xstart...xend) {
 				var nextGID = this.tiles[gidCounter].gid;
