@@ -128,7 +128,7 @@ class TiledMap {
 					var tileset:Tileset = null;
 
 					if (child.get("source") != null) {
-						tileset = Tileset.fromGenericXml(this, Common.getText(child.get("source")));
+						tileset = Tileset.fromGenericXml(this, Loader.the.getBlob(child.get("source")).toString());
 					} else {
 						tileset = Tileset.fromGenericXml(this, child.toString());
 					}
