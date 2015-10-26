@@ -81,7 +81,7 @@ class Layer {
 		var tileGIDs:Array<Int> = new Array<Int>();
 
 		for (child in xml) {
-			if(Helper.isValidElement(child)) {
+			if(Common.isValidElement(child)) {
 				if (child.nodeName == "data") {
 					var encoding:String = "";
 					if (child.exists("encoding")){
@@ -96,7 +96,7 @@ class Layer {
 							tileGIDs = csvToArray(chunk);
 						default:
 							for (tile in child) {
-								if (Helper.isValidElement(tile)) {
+								if (Common.isValidElement(tile)) {
 									var gid = Std.parseInt(tile.get("gid"));
 									tileGIDs.push(gid);
 								}
