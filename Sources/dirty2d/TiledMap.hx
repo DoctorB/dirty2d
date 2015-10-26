@@ -242,7 +242,7 @@ class TiledMap {
 			layer.render(g, xleft, ytop, width, height);
 		}		
 		for (imageLayer in this.imageLayers) {
-			imageLayer.render(g);
+			imageLayer.render(g, xleft, ytop, width, height);
 		}
 	}
 	
@@ -273,29 +273,7 @@ class TiledMap {
 		var r = a % b;
 		return r < 0 ? r + b : r;
 	}
-	
-	public function render(g: Graphics, xleft: Int, ytop: Int, width: Int, height: Int): Void {
-		g.color = Color.White;
-		if (repeat) {
-			var xstart: Int = Std.int(xleft / tileset.TILE_WIDTH) - 1;
-			var xend: Int = Std.int((xleft + width) / tileset.TILE_WIDTH + 1);
-			var ystart: Int = Std.int(ytop / tileset.TILE_HEIGHT) - 1;
-			var yend: Int = Std.int((ytop + height) / tileset.TILE_HEIGHT + 2);
-			for (x in xstart...xend) for (y in ystart...yend) {
-				tileset.render(g, map[mod(x, levelWidth)][mod(y, levelHeight)], x * tileset.TILE_WIDTH, y * tileset.TILE_HEIGHT);
-			}			
-		}
-		else {
-			var xstart: Int = Std.int(Math.max(xleft / tileset.TILE_WIDTH - 1, 0));
-			var xend: Int = Std.int(Math.min((xleft + width) / tileset.TILE_WIDTH + 1, levelWidth));
-			var ystart: Int = Std.int(Math.max(ytop / tileset.TILE_HEIGHT - 1, 0));
-			var yend: Int = Std.int(Math.min((ytop + height) / tileset.TILE_HEIGHT + 2, levelHeight));
-			for (x in xstart...xend) for (y in ystart...yend) {
-				tileset.render(g, map[x][y], x * tileset.TILE_WIDTH, y * tileset.TILE_HEIGHT);
-			}
-		}
-	}
-	
+		
 	public function collidesPoint(point: Vector2): Bool {
 		var xtile: Int = Std.int(point.x / tileset.TILE_WIDTH);
 		var ytile: Int = Std.int(point.y / tileset.TILE_HEIGHT);
