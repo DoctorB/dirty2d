@@ -188,8 +188,8 @@ class Layer {
 		
 		trace("xstart: " + xstart);
 		trace("xend: " + xend);
-		trace("ystart: " + ystart);
-		trace("yend: " + yend);
+		//trace("ystart: " + ystart);
+		//trace("yend: " + yend);
 
 		
 		trace("gidShift: " + gidShift);
@@ -208,7 +208,7 @@ class Layer {
 				gidCounter++;
 			}
 			gidCounter = gidCounter + gidShift;
-			trace("gidCounter: " + gidCounter);
+			//trace("gidCounter: " + gidCounter);
 		}
 		
 	}
