@@ -184,7 +184,7 @@ class Layer {
 
 		// TODO: change system for working with only visible tiles on the screen
 		var gidCounter:Int = xstart;
-		var gidShift: Int = this.parent.totalWidth - xend;
+		var gidShift: Int = this.parent.widthInTiles - xend;
 		
 		trace("gidShift: " + gidShift);
 		trace("gidCounter: " + gidCounter);
@@ -201,7 +201,7 @@ class Layer {
 				}
 				gidCounter++;
 			}
-			//gidCounter = gidCounter + gidShift;
+			gidCounter = gidCounter + gidShift;
 		}
 		
 	}
