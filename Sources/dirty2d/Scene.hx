@@ -21,6 +21,7 @@ class Scene {
 	var backgroundSpeeds : Array<Float>;
 	var foregroundSpeeds : Array<Float>;
 	
+	
 	var sprites : Array<Sprite>;
 	
 	var backgroundColor : Color;
@@ -29,6 +30,7 @@ class Scene {
 	public var camy(default, set): Int;
 	public var screenOffsetX: Int;
 	public var screenOffsetY: Int;
+	public var debugRender: Bool;
 	
 	private var dirtySprites: Bool = false;
 	
@@ -48,6 +50,7 @@ class Scene {
 		backgroundColor = Color.fromBytes(0, 0, 0);
 		camx = 0;
 		camy = 0;
+		debugRender = false;
 	}
 	
 	public function clear() {

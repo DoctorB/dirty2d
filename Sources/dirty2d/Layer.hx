@@ -208,8 +208,6 @@ class Layer {
 		var ystart: Int = Std.int(Math.max(ytop / this.parent.tileHeight - 1, 0));
 		var yend: Int = Std.int(Math.min((ytop + _height) / this.parent.tileHeight + 1, this.parent.heightInTiles));
 	
-
-		// TODO: change system for working with only visible tiles on the screen
 		var gidCounter:Int = xstart;
 		var gidShift: Int = this.parent.widthInTiles - xend + xstart;
 				
@@ -224,20 +222,20 @@ class Layer {
 					tiles[mapping[x][y]].collider.x = destx;
 					tiles[mapping[x][y]].collider.y = desty;
 					g.drawScaledSubImage(tileset.image.texture, rect.x, rect.y, rect.width, rect.height, destx, desty, this.parent.tileWidth, this.parent.tileHeight);
-					
-					g.color = Color.fromBytes(255, 0, 0);
-					g.drawRect(tiles[mapping[x][y]].collider.x * 1, tiles[mapping[x][y]].collider.y * 1, this.parent.tileWidth, this.parent.tileHeight);
-					
+
+					if (Scene.the.debugRender) {
+							g.color = Color.fromBytes(0, 255, 0);
+							g.drawRect(tiles[mapping[x][y]].collider.x, tiles[mapping[x][y]].collider.y, this.parent.tileWidth, this.parent.tileHeight);						
+					}
 				}
 				gidCounter++;
 			}
 			gidCounter = gidCounter + gidShift;
 		}
-		
 	}
 
 	public function collides(sprite: Sprite): Bool {
-		var rect = sprite.collisionRect();
+		var rect = sprite.spriteCollider();
 		if (rect.x <= 0 || rect.y <= 0 || rect.x + rect.width >= parent.totalWidth * parent.tileWidth || rect.y + rect.height >= parent.totalHeight * parent.tileHeight) return true;
 		var delta = 0;
 		var xtilestart : Int = Std.int((rect.x + delta) / parent.tileWidth);
@@ -257,12 +255,9 @@ class Layer {
 	
 	private function getTile(x: Int, y: Int) : Tile {
 		var result : Tile = this.tiles[mapping[x][y]];
-		if (result != null && result.gid != 0) {
-			//trace("x: " + x + " y: " + y + " gid: " + result.gid + " index: " + mapping[x][y]);
-			//trace("rectx: " + result.collider.x + " recty: " + result.collider.y);
+		if (result.gid != 0) {
 			return result;
 		} else {
-			//trace("nullo " + x + "," + y);
 			return null;
 		}
 	}
