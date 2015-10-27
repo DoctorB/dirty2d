@@ -225,7 +225,7 @@ class Layer {
 
 					if (Scene.the.debugRender) {
 							g.color = Color.fromBytes(0, 255, 0);
-							g.drawRect(tiles[mapping[x][y]].collider.x, tiles[mapping[x][y]].collider.y, this.parent.tileWidth, this.parent.tileHeight);						
+							g.drawRect(tiles[mapping[x][y]].collider.x, tiles[mapping[x][y]].collider.y, this.parent.tileWidth, this.parent.tileHeight);
 					}
 				}
 				gidCounter++;
@@ -254,12 +254,15 @@ class Layer {
 	}
 	
 	private function getTile(x: Int, y: Int) : Tile {
-		var result : Tile = this.tiles[mapping[x][y]];
-		if (result.gid != 0) {
-			return result;
-		} else {
-			return null;
+		if (x < parent.widthInTiles && y < parent.heightInTiles) {
+				var result : Tile = this.tiles[mapping[x][y]];
+				if (result.gid != 0) {
+					return result;
+				} else {
+					return null;
+				}			
 		}
+		return null;
 	}
 
 }
