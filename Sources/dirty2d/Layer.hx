@@ -175,20 +175,16 @@ class Layer {
 	
 	public function render(g: Graphics, xleft: Int, ytop: Int, _width: Int, _height: Int): Void {
 		if (!this.visible || parent == null) return;
-		var gidCounter:Int = 0;
 		
 		var xstart: Int = Std.int(Math.max(xleft / this.parent.tileWidth - 1, 0));
 		var xend: Int = Std.int(Math.min((xleft + _width) / this.parent.tileWidth + 1, this.parent.totalWidth));
 		var ystart: Int = Std.int(Math.max(ytop / this.parent.tileHeight - 1, 0));
 		var yend: Int = Std.int(Math.min((ytop + _height) / this.parent.tileHeight + 2, this.parent.totalHeight));
 	
-		if (xend > this.parent.widthInTiles) {
-			xend = this.parent.widthInTiles;
-		}
-		
-		if (yend > this.parent.heightInTiles) {
-			yend = this.parent.heightInTiles;
-		}
+
+		// TODO: change system for working with only visible tiles on the screen
+		var gidCounter:Int = xstart;
+		var gidShift: Int = this.parent.totalWidth - xend;
 		
 		for (y in ystart...yend) {
 			for (x in xstart...xend) {
@@ -202,6 +198,7 @@ class Layer {
 				}
 				gidCounter++;
 			}
+			gidCounter = gidCounter + gidShift;
 		}
 		
 	}
