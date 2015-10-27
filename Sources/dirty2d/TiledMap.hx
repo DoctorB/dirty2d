@@ -77,9 +77,6 @@ class TiledMap {
 
 	public var backgroundColorSet(default, null):Bool = false;
 	
-	
-	var collisionRectCache: Rectangle;
-
 
 	private function new(path:String) {
 		this.path = path;
@@ -112,8 +109,6 @@ class TiledMap {
 		this.imageLayers = new Array<ImageLayer>();
 		this.properties = new Map<String, String>();
 
-		collisionRectCache = new Rectangle(0, 0, tileWidth, tileHeight);
-		
 		// get background color
 		var backgroundColor:String = xml.get("backgroundcolor");
 
@@ -247,7 +242,6 @@ class TiledMap {
 	public function render(g: Graphics, xleft: Int, ytop: Int, width: Int, height: Int): Void {
 		g.color = Color.White;
 		
-	
 		for (layer in this.layers) {
 			layer.render(g, xleft, ytop, width, height);
 		}
@@ -259,31 +253,18 @@ class TiledMap {
 		*/
 	}
 	
-	public function collides(sprite: Sprite, withWhat: ColliderObject): Bool {
-		var rect = sprite.collisionRect();
-		if (withWhat == ColliderObject.ALL) {
-			
-		} else if (withWhat == ColliderObject.IMAGELAYER) {
-			
-		} else if (withWhat == ColliderObject.LAYER) {
-			
-		} else if (withWhat == ColliderObject.TILEDOBJECT) {
-			
-		}
-		
+	public function collidesPoint(point: Vector2): Bool {
 		return false;
 	}
-	
-	public function collidesPoint(point: Vector2, withWhat: ColliderObject): Bool {
-		if (withWhat == ColliderObject.ALL) {
-			
-		} else if (withWhat == ColliderObject.IMAGELAYER) {
-			
-		} else if (withWhat == ColliderObject.LAYER) {
-			
-		} else if (withWhat == ColliderObject.TILEDOBJECT) {
-			
-		}
+
+	public function collides(sprite: Sprite, withWhat: ColliderObject): Bool {
+		if (withWhat == ColliderObject.LAYER) {
+			for (layer in this.layers) {
+				if (layer.visible) {
+					if (layer.collides(sprite)) return true;
+				}				
+			}
+		} 
 		return false;
 	}
 	

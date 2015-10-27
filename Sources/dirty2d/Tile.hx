@@ -22,6 +22,8 @@
 
 package dirty2d;
 
+using kha.Rectangle;
+
 
 @:expose
 class Tile {
@@ -30,10 +32,12 @@ class Tile {
 	public var parent(default, null):Layer;
 	public var width(get_width, null):Int;
 	public var height(get_height, null):Int;
+	public var collider: Rectangle;
 
 	private function new(gid:Int, parent:Layer) {
 		this.gid = gid;
 		this.parent = parent;
+		this.collider = new Rectangle(0, 0, width, height);
 	}
 
 	public static function fromGID(gid:Int, parent:Layer):Tile {

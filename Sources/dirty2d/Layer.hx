@@ -22,10 +22,11 @@
 
 package dirty2d;
 
-
+import kha.Color;
 import kha.FastFloat;
 import kha.graphics2.Graphics;
 import kha.Rectangle;
+
 
 class Layer {
 
@@ -49,21 +50,46 @@ class Layer {
 
 	/** The parent TiledMap */
 	public var parent(default, null):TiledMap;
+	
+	public var mapping(default, null) : Array<Array<Int>>;
+	
+	var collisionRectCache: Rectangle;
 
-	private function new(parent:TiledMap, name:String, width:Int, height:Int,
-			opacity:Float, visible:Bool, tiles:Array<Int>) {
+	private function new(parent:TiledMap, name:String, width:Int, height:Int, opacity:Float, visible:Bool, tiles:Array<Int>) {
+		
+		trace("create layer");
 		this.parent = parent;
 		this.name = name;
 		this.width = width;
 		this.height = height;
 		this.opacity = opacity;
 		this.visible = visible;
-
 		this.tiles = new Array<Tile>();
-
+		
+		this.mapping = new Array<Array<Int>>();
+		for (x in 0...width) {
+			this.mapping.push(new Array<Int>());
+			for (y in 0...height) {
+				this.mapping[x].push(0);
+			}
+		}
+		
+		var index = 0;
+		for (y in 0...height) {
+			for (x in 0...width) {
+				trace("x: " + x + " y: " + y + " index: " + index);
+				this.mapping[x][y] =  index;
+				index++;				
+			}
+			index = width * (y + 1);
+		}
+		
 		for(gid in tiles) {
 			this.tiles.push(Tile.fromGID(gid, this));
 		}
+		
+		collisionRectCache = new Rectangle(0, 0, parent.tileWidth, parent.tileHeight);
+
 	}
 
 	/**
@@ -195,7 +221,13 @@ class Layer {
 					var desty : FastFloat = y * this.parent.tileHeight;
 					var tileset : Tileset = this.parent.getTilesetByGID(nextGID);
 					var rect : Rectangle = tileset.getTileRectByGID(nextGID);
+					tiles[mapping[x][y]].collider.x = destx;
+					tiles[mapping[x][y]].collider.y = desty;
 					g.drawScaledSubImage(tileset.image.texture, rect.x, rect.y, rect.width, rect.height, destx, desty, this.parent.tileWidth, this.parent.tileHeight);
+					
+					g.color = Color.fromBytes(255, 0, 0);
+					g.drawRect(tiles[mapping[x][y]].collider.x * 1, tiles[mapping[x][y]].collider.y * 1, this.parent.tileWidth, this.parent.tileHeight);
+					
 				}
 				gidCounter++;
 			}
@@ -204,10 +236,35 @@ class Layer {
 		
 	}
 
-	public function collides(rect: Rectangle) : Bool {
-		
-		
+	public function collides(sprite: Sprite): Bool {
+		var rect = sprite.collisionRect();
+		if (rect.x <= 0 || rect.y <= 0 || rect.x + rect.width >= parent.totalWidth * parent.tileWidth || rect.y + rect.height >= parent.totalHeight * parent.tileHeight) return true;
+		var delta = 0;
+		var xtilestart : Int = Std.int((rect.x + delta) / parent.tileWidth);
+		var xtileend : Int = Std.int((rect.x + rect.width - delta) / parent.tileWidth);
+		var ytilestart : Int = Std.int((rect.y + delta) / parent.tileHeight);
+		var ytileend : Int = Std.int((rect.y + rect.height - delta) / parent.tileHeight);
+		for (ytile in ytilestart...ytileend + 1) {
+			for (xtile in xtilestart...xtileend + 1) {
+				var tile : Tile = getTile(xtile, ytile);
+				if (tile != null) {
+					if (tile.collider.collision(rect)) return true;
+				}
+			}
+		}
 		return false;
+	}
+	
+	private function getTile(x: Int, y: Int) : Tile {
+		var result : Tile = this.tiles[mapping[x][y]];
+		if (result != null && result.gid != 0) {
+			//trace("x: " + x + " y: " + y + " gid: " + result.gid + " index: " + mapping[x][y]);
+			//trace("rectx: " + result.collider.x + " recty: " + result.collider.y);
+			return result;
+		} else {
+			//trace("nullo " + x + "," + y);
+			return null;
+		}
 	}
 
 }
