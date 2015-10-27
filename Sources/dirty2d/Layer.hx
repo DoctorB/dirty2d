@@ -176,6 +176,10 @@ class Layer {
 	public function render(g: Graphics, xleft: Int, ytop: Int, _width: Int, _height: Int): Void {
 		if (!this.visible || parent == null) return;
 		
+		trace("---");
+		trace("xleft: " + xleft);
+		trace("ytop: " + ytop);
+
 		var xstart: Int = Std.int(Math.max(xleft / this.parent.tileWidth - 1, 0));
 		var xend: Int = Std.int(Math.min((xleft + _width) / this.parent.tileWidth + 1, this.parent.widthInTiles));
 		var ystart: Int = Std.int(Math.max(ytop / this.parent.tileHeight - 1, 0));
@@ -188,6 +192,7 @@ class Layer {
 		
 		trace("xstart: " + xstart);
 		trace("xend: " + xend);
+		trace("---");
 		//trace("ystart: " + ystart);
 		//trace("yend: " + yend);
 
