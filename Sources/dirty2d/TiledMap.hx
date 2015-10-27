@@ -76,6 +76,10 @@ class TiledMap {
 	public var properties(default, null):Map<String, String>;
 
 	public var backgroundColorSet(default, null):Bool = false;
+	
+	
+	var collisionRectCache: Rectangle;
+
 
 	private function new(path:String) {
 		this.path = path;
@@ -108,7 +112,7 @@ class TiledMap {
 		this.imageLayers = new Array<ImageLayer>();
 		this.properties = new Map<String, String>();
 
-		
+		collisionRectCache = new Rectangle(0, 0, tileWidth, tileHeight);
 		
 		// get background color
 		var backgroundColor:String = xml.get("backgroundcolor");
