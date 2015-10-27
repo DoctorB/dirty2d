@@ -96,7 +96,6 @@ class TiledMap {
 	private function parseXML(xml:String) {
 		
 		var xml = Xml.parse(xml).firstElement();
-		trace("1");
 		
 		this.widthInTiles = Std.parseInt(xml.get("width"));
 		this.heightInTiles = Std.parseInt(xml.get("height"));
@@ -125,12 +124,9 @@ class TiledMap {
 		} else {
 			this.backgroundColor = 0x00000000;
 		}
-		trace("2");
 
 		for (child in xml) {
 			if(Common.isValidElement(child)) {
-				trace("xml child.nodename: " + child.nodeName);
-				
 				if (child.nodeName == "tileset") {
 					var tileset:Tileset = null;
 
@@ -164,7 +160,6 @@ class TiledMap {
 				}
 			}
 		}
-		trace("3");
 	}
 
 	/**
@@ -248,9 +243,7 @@ class TiledMap {
 	public function render(g: Graphics, xleft: Int, ytop: Int, width: Int, height: Int): Void {
 		g.color = Color.White;
 		
-		trace("tiledMap_render xleft: " +  xleft +  " ytop: " + ytop + " width:" + width + " height:" + height);
-		trace("this.layers: " + this.layers.length);
-		
+	
 		for (layer in this.layers) {
 			layer.render(g, xleft, ytop, width, height);
 		}
