@@ -186,6 +186,12 @@ class Layer {
 		var gidCounter:Int = xstart;
 		var gidShift: Int = this.parent.widthInTiles - xend;
 		
+		trace("xstart: " + xstart);
+		trace("xend: " + xend);
+		trace("ystart: " + ystart);
+		trace("yend: " + yend);
+
+		
 		trace("gidShift: " + gidShift);
 		trace("gidCounter: " + gidCounter);
 		
@@ -201,7 +207,7 @@ class Layer {
 				}
 				gidCounter++;
 			}
-			gidCounter = gidCounter + gidShift;
+			//gidCounter = gidCounter + gidShift;
 		}
 		
 	}
