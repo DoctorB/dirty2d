@@ -180,9 +180,9 @@ class Layer {
 		trace("xleft: " + xleft);
 		trace("ytop: " + ytop);
 
-		var xstart: Int = Std.int(Math.max(xleft / this.parent.tileWidth - 1, 0));
+		var xstart: Int = Std.int(Math.max(xleft / this.parent.tileWidth, 0));
 		var xend: Int = Std.int(Math.min((xleft + _width) / this.parent.tileWidth + 1, this.parent.widthInTiles));
-		var ystart: Int = Std.int(Math.max(ytop / this.parent.tileHeight - 1, 0));
+		var ystart: Int = Std.int(Math.max(ytop / this.parent.tileHeight, 0));
 		var yend: Int = Std.int(Math.min((ytop + _height) / this.parent.tileHeight + 1, this.parent.heightInTiles));
 	
 
