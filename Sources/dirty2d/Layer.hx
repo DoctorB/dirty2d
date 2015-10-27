@@ -23,6 +23,7 @@
 package dirty2d;
 
 
+import kha.FastFloat;
 import kha.graphics2.Graphics;
 import kha.Rectangle;
 
@@ -176,36 +177,22 @@ class Layer {
 	public function render(g: Graphics, xleft: Int, ytop: Int, _width: Int, _height: Int): Void {
 		if (!this.visible || parent == null) return;
 		
-		trace("---");
-		trace("xleft: " + xleft);
-		trace("ytop: " + ytop);
-
-		var xstart: Int = Std.int(Math.max(xleft / this.parent.tileWidth, 0));
+		var xstart: Int = Std.int(Math.max(xleft / this.parent.tileWidth - 1, 0));
 		var xend: Int = Std.int(Math.min((xleft + _width) / this.parent.tileWidth + 1, this.parent.widthInTiles));
-		var ystart: Int = Std.int(Math.max(ytop / this.parent.tileHeight, 0));
+		var ystart: Int = Std.int(Math.max(ytop / this.parent.tileHeight - 1, 0));
 		var yend: Int = Std.int(Math.min((ytop + _height) / this.parent.tileHeight + 1, this.parent.heightInTiles));
 	
 
 		// TODO: change system for working with only visible tiles on the screen
 		var gidCounter:Int = xstart;
-		var gidShift: Int = this.parent.widthInTiles - xend;
-		
-		trace("xstart: " + xstart);
-		trace("xend: " + xend);
-		trace("---");
-		//trace("ystart: " + ystart);
-		//trace("yend: " + yend);
-
-		
-		trace("gidShift: " + gidShift);
-		trace("gidCounter: " + gidCounter);
-		
+		var gidShift: Int = this.parent.widthInTiles - xend + xstart;
+				
 		for (y in ystart...yend) {
 			for (x in xstart...xend) {
 				var nextGID = this.tiles[gidCounter].gid;
 				if (nextGID != 0) {
-					var destx : Float = x * this.parent.tileWidth;
-					var desty : Float = y * this.parent.tileHeight;
+					var destx : FastFloat = x * this.parent.tileWidth;
+					var desty : FastFloat = y * this.parent.tileHeight;
 					var tileset : Tileset = this.parent.getTilesetByGID(nextGID);
 					var rect : Rectangle = tileset.getTileRectByGID(nextGID);
 					g.drawScaledSubImage(tileset.image.texture, rect.x, rect.y, rect.width, rect.height, destx, desty, this.parent.tileWidth, this.parent.tileHeight);
@@ -213,7 +200,6 @@ class Layer {
 				gidCounter++;
 			}
 			gidCounter = gidCounter + gidShift;
-			//trace("gidCounter: " + gidCounter);
 		}
 		
 	}
