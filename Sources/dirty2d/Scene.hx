@@ -172,6 +172,8 @@ class Scene {
 		camx = newcamx;
 		if (collisionLayer != null) {
 			screenOffsetX = Std.int(Math.min(Math.max(0, camx - Game.the.width / 2), collisionLayer.getMap().totalWidth - Game.the.width));
+			trace(screenOffsetX);
+			trace(camx);
 			if (getWidth() < Game.the.width) screenOffsetX = 0;
 		}
 		else screenOffsetX = camx;
@@ -225,7 +227,7 @@ class Scene {
 	public function update(): Void {
 		cleanSprites();
 		if (collisionLayer != null) {
-			collisionLayer.advance(screenOffsetX, screenOffsetX + Game.the.width);
+			//collisionLayer.advance(screenOffsetX, screenOffsetX + Game.the.width);
 		}
 		cleanSprites();
 		for (sprite in sprites) sprite.update();
