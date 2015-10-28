@@ -118,7 +118,6 @@ class CollisionLayer {
 	
 	//Bresenhahm
 	private function line(xstart: Float, ystart: Float, xend: Float, yend: Float, sprite: Sprite): Void {
-		/*
 		var x0 = Math.round(xstart);
 		var y0 = Math.round(ystart);
 		var x1 = Math.round(xend);
@@ -145,19 +144,19 @@ class CollisionLayer {
 				err -= dy;
 				x0 += sx;
 				sprite.x = x0;
-				if (map.collides(sprite)) {
+				if (map.collides(sprite, ColliderObject.LAYER)) {
 					sprite.y -= 1;
-					if (!map.collides(sprite)) {
+					if (!map.collides(sprite, ColliderObject.LAYER)) {
 						continue;
 					}
 					else {
 						sprite.y -= 1;
-						if (!map.collides(sprite)) {
+						if (!map.collides(sprite, ColliderObject.LAYER)) {
 							continue;
 						}
 						else {
 							sprite.y -= 1;
-							if (!map.collides(sprite)) {
+							if (!map.collides(sprite, ColliderObject.LAYER)) {
 								continue;
 							}
 							sprite.y += 1;
@@ -175,7 +174,7 @@ class CollisionLayer {
 						}
 						y0 += sy;
 						sprite.y = y0;
-						if (map.collides(sprite)) {
+						if (map.collides(sprite, ColliderObject.LAYER)) {
 							sprite.y -= sy;
 							if (sy < 0) sprite.hitFrom(Direction.DOWN);
 							else sprite.hitFrom(Direction.UP);
@@ -189,7 +188,7 @@ class CollisionLayer {
 				err += dx;
 				y0 += sy; 
 				sprite.y = y0;
-				if (map.collides(sprite)) {
+				if (map.collides(sprite, ColliderObject.LAYER)) {
 					sprite.y -= sy;
 					if (sy < 0) sprite.hitFrom(Direction.DOWN);
 					else sprite.hitFrom(Direction.UP);
@@ -200,19 +199,19 @@ class CollisionLayer {
 						}
 						x0 += sx;
 						sprite.x = x0;
-						if (map.collides(sprite)) {
+						if (map.collides(sprite, ColliderObject.LAYER)) {
 							sprite.y -= 1;
-							if (!map.collides(sprite)) {
+							if (!map.collides(sprite, ColliderObject.LAYER)) {
 								continue;
 							}
 							else {
 								sprite.y -= 1;
-								if (!map.collides(sprite)) {
+								if (!map.collides(sprite, ColliderObject.LAYER)) {
 									continue;
 								}
 								else {
 									sprite.y -= 1;
-									if (!map.collides(sprite)) {
+									if (!map.collides(sprite, ColliderObject.LAYER)) {
 										continue;
 									}
 									sprite.y += 1;
@@ -230,11 +229,9 @@ class CollisionLayer {
 				}
 			}
 		}
-		*/
 	}
 	
 	private function moveSprite(sprite: Sprite): Void {
-		/*
 		sprite.speedx += sprite.accx;
 		sprite.speedy += sprite.accy;
 		if (sprite.speedy > sprite.maxspeedy) sprite.speedy = sprite.maxspeedy;
@@ -245,15 +242,17 @@ class CollisionLayer {
 			var ystart = sprite.y;
 			sprite.x = xaim;
 			sprite.y = yaim;
-			if (map.collides(sprite)) {
-				line(xstart, ystart, xaim, yaim, sprite);
+			sprite.x += sprite.speedx;
+			sprite.y += sprite.speedy;
+			if (map.collides(sprite, ColliderObject.LAYER)) {
+				//sprite.removed = true;
+				//line(xstart, ystart, xaim, yaim, sprite);
 			}
 		}
 		else {
 			sprite.x += sprite.speedx;
 			sprite.y += sprite.speedy;
 		}
-		*/
 	}
 	
 	private function moveSprites(sprites: Array<Sprite>, xleft: Float, xright: Float): Void {
@@ -265,6 +264,27 @@ class CollisionLayer {
 		moveSprites(enemies, xleft, xright);
 		moveSprites(projectiles, xleft, xright);
 		moveSprites(others, xleft, xright);
+	}
+	
+	public function test(): Void {
+		sortAllSprites();
+		for (sprite in enemies) {
+			if (sprite.speedy > sprite.maxspeedy) sprite.speedy = sprite.maxspeedy;	
+			if (sprite.collides) {
+					var xaim = sprite.x + sprite.speedx;
+					var yaim = sprite.y + sprite.speedy;
+					var xstart = sprite.x;
+					var ystart = sprite.y;
+					sprite.x = xaim;
+					sprite.y = yaim;
+					if (map.collides(sprite, ColliderObject.LAYER)) {
+						line(xstart, ystart, xaim, yaim, sprite);
+					}
+			} else {
+					sprite.x += sprite.speedx;
+					sprite.y += sprite.speedy;
+			}
+		}
 	}
 	
 	public function advance(xleft: Float, xright: Float): Void {
@@ -285,17 +305,8 @@ class CollisionLayer {
 					enemy.hit(projectile);
 				}
 			}
-			/* ++i; */
 		}
 		
-		/*i = 0;
-		while (i < projectiles.length) {
-			if (projectiles[i].x + projectiles[i].width > xleft) break;
-			++i;
-		}
-		while (i < projectiles.length) {
-			var projectile = projectiles[i];
-			if (projectile.x > xright) break;*/
 		for (projectile in projectiles) {
 			var rect: Rectangle = projectile.collisionRect();
 			for (hero in heroes) {
@@ -304,7 +315,6 @@ class CollisionLayer {
 					projectile.hit(hero);
 				}
 			}
-			/*++i;*/
 		}
 		
 		for (other in others) {

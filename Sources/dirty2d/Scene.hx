@@ -247,8 +247,10 @@ class Scene {
 		var currentTime:Float = Scheduler.time();
 
 		cleanSprites();
+		
 		if (collisionLayer != null) {
-			//collisionLayer.advance(screenOffsetX, screenOffsetX + Game.the.width);
+				//collisionLayer.advance(screenOffsetX, screenOffsetX + Game.the.width);
+				collisionLayer.test();
 		}
 		
 		cleanSprites();
@@ -301,7 +303,11 @@ class Scene {
 		if (showInfo) {
 			if (defaultFont != null) {
 				g.set_font(defaultFont);
-				g.drawString(Std.string(fps), screenOffsetX, 0);				
+				var info : String = "FPS: " + Std.string(fps);
+				if (collisionLayer != null) {
+					info += " - Sprite count: " + collisionLayer.countEnemies();
+				}
+				g.drawString(info, screenOffsetX, 0);				
 			} else {
 				trace("font == null");
 			}
