@@ -6,6 +6,7 @@ package dirty2d;
 
 import kha.math.Vector2;
 import kha.Rectangle;
+import kha.Game;
 
 class CollisionLayer {
 	private var map: TiledMap;
@@ -277,12 +278,24 @@ class CollisionLayer {
 					var ystart = sprite.y;
 					sprite.x = xaim;
 					sprite.y = yaim;
-					if (map.collides(sprite, ColliderObject.LAYER)) {
+					/*if (map.collides(sprite, ColliderObject.LAYER)) {
 						line(xstart, ystart, xaim, yaim, sprite);
-					}
+					}*/
 			} else {
 					sprite.x += sprite.speedx;
 					sprite.y += sprite.speedy;
+			}
+			if (sprite.x > Game.the.width) {
+				sprite.speedx = -sprite.speedx;
+			}
+			if (sprite.x < 0) {
+				sprite.speedx = -sprite.speedx;
+			}
+			if (sprite.y > Game.the.height) {
+				sprite.speedy = -sprite.speedy;
+			}
+			if (sprite.y < 0) {
+				sprite.speedy = -sprite.speedy;
 			}
 		}
 	}
