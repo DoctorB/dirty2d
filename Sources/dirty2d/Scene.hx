@@ -6,11 +6,17 @@ package dirty2d;
 
 import haxe.ds.ArraySort;
 import kha.Color;
+import kha.FastFloat;
+import kha.FontStyle;
 import kha.Game;
 import kha.graphics2.Graphics;
 import kha.math.FastMatrix3;
 import kha.math.Matrix3;
 import kha.math.Vector2;
+
+import kha.Loader;
+import kha.Kravur;
+import kha.Scheduler;
 
 class Scene {
 	private static var instance : Scene;
@@ -31,11 +37,19 @@ class Scene {
 	public var screenOffsetX: Int;
 	public var screenOffsetY: Int;
 	public var debugRender: Bool;
+	public var showInfo: Bool;
 	
 	private var dirtySprites: Bool = false;
 	
+	// FPS INFO
+	public var defaultFont : Kravur;
+	public var totalFrames:Int;
+	public var elapsedTime:FastFloat;
+	public var fps:Int;
+	public var previousTime:FastFloat;		
+
 	public static var the(get, null): Scene;
-	
+		
 	private static function get_the(): Scene {
 		if (instance == null) instance = new Scene();
 		return instance;
@@ -51,6 +65,13 @@ class Scene {
 		camx = 0;
 		camy = 0;
 		debugRender = false;
+		showInfo = false;
+		previousTime = 0;
+		elapsedTime = 0;
+		totalFrames = 0;
+		fps = 0;
+		var fs : FontStyle = new FontStyle(false, false, false);
+		defaultFont = cast(Loader.the.loadFont("Arial", fs, 14), Kravur);	
 	}
 	
 	public function clear() {
@@ -172,8 +193,6 @@ class Scene {
 		camx = newcamx;
 		if (collisionLayer != null) {
 			screenOffsetX = Std.int(Math.min(Math.max(0, camx - Game.the.width / 2), collisionLayer.getMap().totalWidth - Game.the.width));
-			trace(screenOffsetX);
-			trace(camx);
 			if (getWidth() < Game.the.width) screenOffsetX = 0;
 		}
 		else screenOffsetX = camx;
@@ -225,13 +244,26 @@ class Scene {
 	}
 	
 	public function update(): Void {
+		var currentTime:Float = Scheduler.time();
+
 		cleanSprites();
 		if (collisionLayer != null) {
 			//collisionLayer.advance(screenOffsetX, screenOffsetX + Game.the.width);
 		}
+		
 		cleanSprites();
 		for (sprite in sprites) sprite.update();
 		cleanSprites();
+		
+		var deltaTime:Float = (currentTime - previousTime);
+		previousTime = currentTime;
+        elapsedTime += deltaTime;
+        totalFrames++;		
+		if (elapsedTime >= 1.0) {
+			fps = totalFrames;
+			totalFrames = 0;
+			elapsedTime = 0;			
+		}		
 	}
 
 	public function render(g: Graphics) {
@@ -265,6 +297,16 @@ class Scene {
 			g.transformation = FastMatrix3.translation(Math.round(-screenOffsetX * foregroundSpeeds[i]), Math.round(-screenOffsetY * foregroundSpeeds[i]));
 			foregrounds[i].render(g, Std.int(screenOffsetX * foregroundSpeeds[i]), Std.int(screenOffsetY * foregroundSpeeds[i]), Game.the.width, Game.the.height);
 		}
+		
+		if (showInfo) {
+			if (defaultFont != null) {
+				g.set_font(defaultFont);
+				g.drawString(Std.string(fps), screenOffsetX, 0);				
+			} else {
+				trace("font == null");
+			}
+		}
+		
 	}
 	
 	public function getWidth() : Float {

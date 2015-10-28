@@ -57,7 +57,6 @@ class Layer {
 
 	private function new(parent:TiledMap, name:String, width:Int, height:Int, opacity:Float, visible:Bool, tiles:Array<Int>) {
 		
-		trace("create layer");
 		this.parent = parent;
 		this.name = name;
 		this.width = width;
@@ -77,7 +76,6 @@ class Layer {
 		var index = 0;
 		for (y in 0...height) {
 			for (x in 0...width) {
-				trace("x: " + x + " y: " + y + " index: " + index);
 				this.mapping[x][y] =  index;
 				index++;				
 			}
